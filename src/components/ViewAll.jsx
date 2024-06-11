@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
+import axios from 'axios'
 
 const ViewAll = () => {
+    const [data,changeData] = useState([])
+    const fetchData = () => {
+        axios.get("http://localhost:8083/view").then(
+            (response) => {
+                changeData(response.data)
+
+            }
+        ).catch().finally()
+    }
+    useEffect(() => { fetchData() }, [])
     return (
         <div>
             <Navbar/>
@@ -12,60 +23,32 @@ const ViewAll = () => {
                             <thead>
                                 <tr>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Pub.Yr</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Published Year</th>
+                                    <th scope="col">Author Name</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Price</th>
+                                    <th scope="col">Edition</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <td>abc</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
+                                {
+                                    data.map(
+
+                                        (value, index) => {
+                                            return <tr>
+                                                <td>{value.Title}</td>
+                                                <td>{value.Category}</td>
+                                                <td>{value.PublishedYear}</td>
+                                                <td>{value.AuthorName}</td>
+                                                <td>{value.Description}</td>
+                                                <td>{value.Price}</td>
+                                                <td>{value.Edition}</td>
+                                            </tr>
+
+                                        }
+                                    )   
+                                }
                             </tbody>
                         </table>
                     </div>
